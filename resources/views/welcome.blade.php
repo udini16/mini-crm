@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" />
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -19,61 +19,117 @@
         
         <style>
             .bg-samurai {
-                background-image: url('{{ asset('images/samurai_bg.jpg') }}');
+                background-image: url('{{ asset('images/samurai_bg_wide.jpg') }}');
                 background-size: cover;
                 background-position: center;
                 background-attachment: fixed;
             }
+            .blockquote {
+                padding-left: 2rem;
+                position: relative;
+                overflow: hidden;
+            }
+            .blockquote::before,
+            .blockquote::after {
+                position: absolute;
+                color: #777;
+            }   
+            .blockquote p {
+                margin: 0;
+                font-family: 'Playfair Display', serif;
+                font-weight: 700;
+            }
+            .blockquote p + p {
+                margin-top: 1rem;
+            }
+            .button-54 {
+                font-family: 'Playfair Display', serif;
+                font-size: 16px;
+                letter-spacing: 2px;
+                text-decoration: none;
+                text-transform: uppercase;
+                color: #000;
+                background-color: #fff;
+                cursor: pointer;
+                border: 3px solid #000;
+                padding: 0.25em 0.5em;
+                box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+                position: relative;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                transition: all 0.1s;
+            }
+            .button-54:active {
+                box-shadow: 0px 0px 0px 0px;
+                top: 5px;
+                left: 5px;
+            }
+            @media (min-width: 768px) {
+                .button-54 {
+                    padding: 0.25em 0.75em;
+                }
+            }
+            .blockquote--slashes::before {
+                content: "//";
+                transform: rotate(90deg);
+                left: 0;
+            }   
+            .blockquote--slashes::after {
+                content: "";
+                left: 5px;
+                top: 25px;
+                width: 1px;
+                height: 100%;
+                background-color: currentColor;
+            }    
+            .blockquote--classic::before {
+                content:  url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23777777'><path d='M9.983 3v7.391C9.983 16.095 6.252 19.961 1 21l-.995-2.151C2.437 17.932 4 15.211 4 13H0V3h9.983zM24 3v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151C16.437 17.932 18 15.211 18 13h-3.983V3H24z'/></svg>");
+                left: 0;
+            }   
+            .blockquote--classic::after {
+                content: "";
+                left: 5px;
+                top: 25px;
+                width: 1px;
+                height: 100%;
+                background-color: currentColor;
+            }  
         </style>
     </head>
-    <body class="font-['Inter'] antialiased bg-slate-900 text-slate-100 selection:bg-indigo-500 selection:text-white">
+    <body class="font-['Playfair_Display'] antialiased bg-slate-900 text-slate-100 selection:bg-indigo-500 selection:text-white">
         
         <!-- Hero Section -->
-        <div class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-samurai">
+        <div class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-900">
+            <!-- Grayscale Background Image -->
+            <div class="absolute inset-0 bg-samurai grayscale z-0"></div>
             <!-- Overlay to make text readable over the background -->
             <div class="absolute inset-0 bg-black/50 z-0"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-0"></div>
 
             <!-- Top Navigation / Branding -->
-            <div class="absolute top-6 left-6 z-20 flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-600/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg shadow-indigo-900/50">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                    </svg>
-                </div>
-                <span class="text-xl font-bold text-white tracking-tight drop-shadow-md">Mini<span class="text-indigo-400">CRM</span></span>
+            <div class="absolute top-6 left-6 z-20 flex items-center">
+                <img src="{{ asset('images/minicrm_logo.png') }}" alt="MiniCRM" class="h-28 md:h-32 w-auto object-contain invert opacity-90" />
             </div>
-
             <!-- Main Content Area -->
-            <div class="relative z-10 w-full max-w-5xl px-6 lg:px-8 flex flex-col items-center text-center mt-10">
-                
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 drop-shadow-2xl leading-tight">
-                    "Mistakes are meant to <br class="hidden md:block"/> guide you not define you"
-                </h1>
-                
-                <p class="mt-4 text-xl md:text-2xl text-slate-200 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-md font-medium">
-                    A streamlined, elegant solution for managing your companies and employees.
-                </p>
+            <div class="relative z-10 w-full px-6 lg:px-16 xl:px-32 flex flex-col items-end justify-center text-left mt-10">
+                <div class="max-w-2xl w-full ml-auto">
+                    <blockquote class="blockquote blockquote--classic mb-12">
+                        <p class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight">
+                            A streamlined, elegant solution for managing your companies and employees.
+                        </p>
+                    </blockquote>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-start items-center">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="group relative px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold rounded-full overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                                <span class="relative z-10 flex items-center gap-2 text-lg">
-                                    Go to Dashboard
-                                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                </span>
-                            </a>
+                            <a href="{{ url('/dashboard') }}" class="button-54">Go to Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="group relative px-8 py-4 bg-indigo-600 text-white font-semibold rounded-full overflow-hidden shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:bg-indigo-500 transition-all duration-300 transform hover:-translate-y-1">
-                                <span class="relative z-10 flex items-center gap-2 text-lg">
-                                    Admin Login
-                                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                </span>
-                            </a>
+                            <a href="{{ route('login') }}" class="button-54">Admin Login</a>
                         @endauth
                     @endif
                 </div>
+            </div>
             </div>
             
             <!-- Scroll Indicator -->
