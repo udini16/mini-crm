@@ -20,7 +20,21 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css">
         <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js"></script>
 
+        <!-- Swup for smooth transitions -->
+        <script src="https://unpkg.com/swup@4"></script>
+
         <style>
+            /* Swup Transition Styles */
+            .transition-fade {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                opacity: 1;
+                transform: translateY(0);
+            }
+            html.is-animating .transition-fade {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
             .anim-btn-container {
                 position: relative;
                 height: 48px;
@@ -193,7 +207,7 @@
                         </a>
                     </div>
 
-                    <nav class="mt-6 px-4 space-y-2">
+                    <nav id="swup-sidebar" class="mt-6 px-4 space-y-2">
                         <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
                             Dashboard
                         </a>
@@ -222,18 +236,28 @@
 
             <!-- Main Content Area -->
             <div class="relative z-10 flex-1 flex flex-col overflow-hidden">
-                @isset($header)
-                    <header class="bg-slate-900/40 backdrop-blur-md border-b border-slate-700/50 h-20 flex items-center px-8">
-                        <div class="w-full flex justify-between items-center text-white">
-                            {{ $header }}
-                        </div>
-                    </header>
-                @endisset
+                <div id="swup-header" class="transition-fade">
+                    @isset($header)
+                        <header class="bg-slate-900/40 backdrop-blur-md border-b border-slate-700/50 h-20 flex items-center px-8">
+                            <div class="w-full flex justify-between items-center text-white">
+                                {{ $header }}
+                            </div>
+                        </header>
+                    @endisset
+                </div>
 
-                <main class="flex-1 overflow-y-auto p-8">
+                <main id="swup-main" class="flex-1 overflow-y-auto p-8 transition-fade">
                     {{ $slot }}
                 </main>
             </div>
         </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const swup = new Swup({
+                    containers: ['#swup-sidebar', '#swup-header', '#swup-main']
+                });
+            });
+        </script>
     </body>
 </html>
