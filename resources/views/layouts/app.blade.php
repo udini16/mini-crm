@@ -10,28 +10,178 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+        <style>
+            .anim-btn-container {
+                position: relative;
+                height: 80px;
+                width: 200px;
+            }
+            .anim-button {
+                background: #2B2D2F;
+                height: 80px;
+                width: 200px;
+                text-align: center;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                cursor: pointer;
+                border-radius: 8px;
+                z-index: 10;
+            }
+
+            .anim-text {
+                font: bold 1.25rem/1 poppins, sans-serif;
+                color: #71DFBE;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-52%);
+                left: 0;
+                right: 0;
+                pointer-events: none;
+            }
+
+            .anim-progress-bar {
+                position: absolute;
+                height: 10px;
+                width: 0;
+                right: 0;
+                top: 50%;
+                left: 50%;
+                border-radius: 200px;
+                transform: translateY(-50%) translateX(-50%);
+                background: #71DFBE;
+                z-index: 11;
+            }
+
+            .anim-svg {
+                width: 30px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%) translateX(-50%);
+                left: 50%;
+                right: 0;
+                z-index: 12;
+            }
+
+            .anim-check {
+                fill: none;
+                stroke: #1D1F20;
+                stroke-width: 4;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+
+
+        <style>
+            .bg-samurai {
+                background-image: url('{{ asset('images/samurai_bg_wide.jpg') }}');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }
+            .button-54 {
+                font-family: 'Playfair Display', serif;
+                font-size: 16px;
+                letter-spacing: 2px;
+                text-decoration: none;
+                text-transform: uppercase;
+                color: #fff;
+                cursor: pointer;
+                border: 3px solid #fff;
+                padding: 0.25em 0.5em;
+                box-shadow: 1px 1px 0px 0px #fff,
+                    2px 2px 0px 0px #fff,
+                    3px 3px 0px 0px #fff,
+                    4px 4px 0px 0px #fff,
+                    5px 5px 0px 0px #fff;
+                position: relative;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                background-color: transparent;
+                transition: transform 0.1s ease, box-shadow 0.1s ease;
+            }
+
+            .button-54:active {
+                box-shadow: 0px 0px 0px 0px #fff;
+                transform: translateY(5px) translateX(5px);
+            }
+
+            @media (min-width: 768px) {
+                .button-54 {
+                    padding: 0.25em 0.75em;
+                }
+            }
+        </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body class="font-sans antialiased text-slate-100 bg-slate-900 overflow-hidden">
+        
+        <div class="flex h-screen w-full relative">
+            <!-- Grayscale Background Image -->
+            <div class="absolute inset-0 bg-samurai grayscale z-0"></div>
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-slate-900/80 z-0"></div>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+            <!-- Sidebar Navigation -->
+            <div class="relative z-10 w-64 flex-shrink-0 bg-slate-900/60 backdrop-blur-xl border-r border-slate-700/50 flex flex-col justify-between">
+                <div>
+                    <div class="h-20 flex items-center justify-center border-b border-slate-700/50 px-6">
+                        <a href="{{ url('/') }}" class="flex items-center gap-3">
+                            <img src="{{ asset('images/favicon.png') }}" alt="MiniCRM" class="h-8 w-auto invert opacity-90" />
+                            <span class="text-xl font-['Playfair_Display'] font-bold tracking-wider text-white">MiniCRM</span>
+                        </a>
                     </div>
-                </header>
-            @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                    <nav class="mt-6 px-4 space-y-2">
+                        <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
+                            Dashboard
+                        </a>
+                        <a href="{{ route('companies.index') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('companies.*') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
+                            Companies
+                        </a>
+                        <a href="{{ route('employees.index') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('employees.*') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
+                            Employees
+                        </a>
+                    </nav>
+                </div>
+
+                <div class="p-4 border-t border-slate-700/50">
+                    <div class="px-4 py-3 text-sm text-slate-400">
+                        Logged in as:<br>
+                        <span class="text-white font-medium truncate block">{{ Auth::user()->email }}</span>
+                    </div>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-4 py-2 mt-2 text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg transition-colors">
+                            Log Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="relative z-10 flex-1 flex flex-col overflow-hidden">
+                @isset($header)
+                    <header class="bg-slate-900/40 backdrop-blur-md border-b border-slate-700/50 h-20 flex items-center px-8">
+                        <div class="w-full flex justify-between items-center text-white">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
+
+                <main class="flex-1 overflow-y-auto p-8">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
     </body>
 </html>
