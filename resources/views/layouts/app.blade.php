@@ -189,45 +189,45 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased text-slate-100 bg-slate-900 overflow-hidden">
+    <body class="font-['Playfair_Display'] antialiased text-slate-900 bg-slate-100 overflow-hidden">
         
         <div class="flex h-screen w-full relative">
             <!-- Grayscale Background Image -->
-            <div class="absolute inset-0 bg-samurai grayscale z-0"></div>
+            <div class="absolute inset-0 bg-samurai grayscale opacity-10 z-0"></div>
             <!-- Overlay -->
-            <div class="absolute inset-0 bg-slate-900/80 z-0"></div>
+            <div class="absolute inset-0 bg-slate-100/50 z-0"></div>
 
             <!-- Sidebar Navigation -->
-            <div class="relative z-10 w-64 flex-shrink-0 bg-slate-900/60 backdrop-blur-xl border-r border-slate-700/50 flex flex-col justify-between">
+            <div class="relative z-10 w-64 flex-shrink-0 bg-white/90 backdrop-blur-xl border-r border-slate-200 flex flex-col justify-between">
                 <div>
-                    <div class="h-20 flex items-center justify-center border-b border-slate-700/50 px-6">
+                    <div class="h-20 flex items-center justify-center border-b border-slate-200 px-6">
                         <a href="{{ url('/') }}" class="flex items-center gap-3">
-                            <img src="{{ asset('images/favicon.png') }}" alt="MiniCRM" class="h-8 w-auto invert opacity-90" />
-                            <span class="text-xl font-['Playfair_Display'] font-bold tracking-wider text-white">MiniCRM</span>
+                            <img src="{{ asset('images/favicon.png') }}" alt="MiniCRM" class="h-8 w-auto opacity-90" />
+                            <span class="text-xl font-bold tracking-wider text-slate-900">MiniCRM</span>
                         </a>
                     </div>
 
                     <nav id="swup-sidebar" class="mt-6 px-4 space-y-2">
-                        <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
+                        <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('dashboard') ? 'bg-black text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100 hover:text-black' }}">
                             Dashboard
                         </a>
-                        <a href="{{ route('companies.index') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('companies.*') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
+                        <a href="{{ route('companies.index') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('companies.*') ? 'bg-black text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100 hover:text-black' }}">
                             Companies
                         </a>
-                        <a href="{{ route('employees.index') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('employees.*') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800/80 hover:text-white' }}">
+                        <a href="{{ route('employees.index') }}" class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('employees.*') ? 'bg-black text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100 hover:text-black' }}">
                             Employees
                         </a>
                     </nav>
                 </div>
 
-                <div class="p-4 border-t border-slate-700/50">
-                    <div class="px-4 py-3 text-sm text-slate-400">
+                <div class="p-4 border-t border-slate-200">
+                    <div class="px-4 py-3 text-sm text-slate-500">
                         Logged in as:<br>
-                        <span class="text-white font-medium truncate block">{{ Auth::user()->email }}</span>
+                        <span class="text-black font-medium truncate block">{{ Auth::user()->email }}</span>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full text-left px-4 py-2 mt-2 text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg transition-colors">
+                        <button type="submit" class="w-full text-left px-4 py-2 mt-2 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-colors">
                             Log Out
                         </button>
                     </form>
@@ -238,8 +238,8 @@
             <div class="relative z-10 flex-1 flex flex-col overflow-hidden">
                 <div id="swup-header" class="transition-fade">
                     @isset($header)
-                        <header class="bg-slate-900/40 backdrop-blur-md border-b border-slate-700/50 h-20 flex items-center px-8">
-                            <div class="w-full flex justify-between items-center text-white">
+                        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 h-20 flex items-center px-8">
+                            <div class="w-full flex justify-between items-center text-slate-900">
                                 {{ $header }}
                             </div>
                         </header>

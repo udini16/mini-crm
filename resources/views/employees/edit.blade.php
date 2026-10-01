@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-4">
-            <a href="{{ route('employees.index') }}" class="text-slate-400 hover:text-slate-600 transition-colors">
+            <a href="{{ route('employees.index') }}" class="text-slate-600 hover:text-slate-600 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </a>
             <h2 class="font-bold text-2xl text-slate-800 tracking-tight">
@@ -12,7 +12,7 @@
 
     <div class="py-12 relative">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-slate-900/60 backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden border border-slate-700/50">
+            <div class="bg-white backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden border border-slate-200">
                 <div class="p-8">
                     <form method="POST" action="{{ route('employees.update', $employee) }}" class="space-y-6">
                         @csrf
@@ -21,15 +21,15 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <!-- First Name -->
                             <div>
-                                <x-input-label for="first_name" :value="__('First Name')" class="text-sm font-semibold text-slate-300" />
-                                <x-text-input id="first_name" class="block mt-2 w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="first_name" :value="old('first_name', $employee->first_name)" required autofocus />
+                                <x-input-label for="first_name" :value="__('First Name')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="first_name" class="block mt-2 w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="first_name" :value="old('first_name', $employee->first_name)" required autofocus />
                                 <x-input-error :messages="$errors->get('first_name')" class="mt-2 text-sm text-red-400" />
                             </div>
 
                             <!-- Last Name -->
                             <div>
-                                <x-input-label for="last_name" :value="__('Last Name')" class="text-sm font-semibold text-slate-300" />
-                                <x-text-input id="last_name" class="block mt-2 w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="last_name" :value="old('last_name', $employee->last_name)" required />
+                                <x-input-label for="last_name" :value="__('Last Name')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="last_name" class="block mt-2 w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="last_name" :value="old('last_name', $employee->last_name)" required />
                                 <x-input-error :messages="$errors->get('last_name')" class="mt-2 text-sm text-red-400" />
                             </div>
                         </div>
@@ -55,22 +55,22 @@
                                 return opt ? opt.name : 'Select a Company...';
                             }
                         }" @click.outside="open = false" class="relative">
-                            <x-input-label for="company_id" :value="__('Company')" class="text-sm font-semibold text-slate-300" />
+                            <x-input-label for="company_id" :value="__('Company')" class="text-sm font-semibold text-slate-700" />
                             <div class="relative mt-2">
-                                <button type="button" @click="open = !open; if(open) setTimeout(() => $refs.search.focus(), 50)" class="flex items-center justify-between w-full border border-slate-600 bg-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5 px-3 text-left transition-colors">
-                                    <span x-text="selectedName" :class="selected ? 'text-slate-100' : 'text-slate-500'"></span>
-                                    <svg class="h-4 w-4 text-slate-400 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <button type="button" @click="open = !open; if(open) setTimeout(() => $refs.search.focus(), 50)" class="flex items-center justify-between w-full border border-slate-300 bg-slate-50 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5 px-3 text-left transition-colors">
+                                    <span x-text="selectedName" :class="selected ? 'text-slate-900' : 'text-slate-500'"></span>
+                                    <svg class="h-4 w-4 text-slate-600 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
                                 
-                                <div x-show="open" x-transition.opacity class="absolute z-50 w-full mt-1 bg-slate-800 border border-slate-600 rounded-lg shadow-xl overflow-hidden">
-                                    <div class="p-2 border-b border-slate-700 bg-slate-800">
-                                        <input type="text" x-model="search" x-ref="search" class="w-full bg-slate-900 border-slate-600 text-slate-100 rounded-md text-sm py-1.5 px-3 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Search company...">
+                                <div x-show="open" x-transition.opacity class="absolute z-50 w-full mt-1 bg-slate-50 border border-slate-300 rounded-lg shadow-xl overflow-hidden">
+                                    <div class="p-2 border-b border-slate-200 bg-slate-50">
+                                        <input type="text" x-model="search" x-ref="search" class="w-full bg-white border-slate-300 text-slate-900 rounded-md text-sm py-1.5 px-3 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Search company...">
                                     </div>
-                                    <ul class="max-h-48 overflow-y-auto bg-slate-800">
+                                    <ul class="max-h-48 overflow-y-auto bg-slate-50">
                                         <template x-for="option in filteredOptions" :key="option.id">
                                             <li @click="selected = option.id; open = false; search = ''" 
                                                 class="px-3 py-2 cursor-pointer transition-colors text-sm"
-                                                :class="selected == option.id ? 'bg-indigo-600 text-white font-medium' : 'text-slate-300 hover:bg-slate-700'">
+                                                :class="selected == option.id ? 'bg-black text-black font-medium' : 'text-slate-700 hover:bg-slate-200'">
                                                 <span x-text="option.name"></span>
                                             </li>
                                         </template>
@@ -85,8 +85,8 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <!-- Email -->
                             <div>
-                                <x-input-label for="email" :value="__('Email Address')" class="text-sm font-semibold text-slate-300" />
-                                <x-text-input id="email" class="block mt-2 w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="email" name="email" :value="old('email', $employee->email)" />
+                                <x-input-label for="email" :value="__('Email Address')" class="text-sm font-semibold text-slate-700" />
+                                <x-text-input id="email" class="block mt-2 w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="email" name="email" :value="old('email', $employee->email)" />
                                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-400" />
                             </div>
 
@@ -117,17 +117,17 @@
                                     iti.setNumber(phoneValue);
                                 }
                             ">
-                                <x-input-label for="phone_display" :value="__('Phone Number')" class="text-sm font-semibold text-slate-300" />
+                                <x-input-label for="phone_display" :value="__('Phone Number')" class="text-sm font-semibold text-slate-700" />
                                 <div class="mt-2">
-                                    <x-text-input id="phone_display" x-ref="phone" class="block w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="tel" />
+                                    <x-text-input id="phone_display" x-ref="phone" class="block w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="tel" />
                                 </div>
                                 <input type="hidden" name="phone" x-model="phoneValue">
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2 text-sm text-red-400" />
                             </div>
                         </div>
 
-                        <div class="pt-6 flex items-center justify-end gap-4 border-t border-slate-700/50 mt-6">
-                            <a href="{{ route('employees.index') }}" class="text-sm font-medium text-slate-400 hover:text-slate-200 transition-colors">
+                        <div class="pt-6 flex items-center justify-end gap-4 border-t border-slate-200 mt-6">
+                            <a href="{{ route('employees.index') }}" class="text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors">
                                 Cancel
                             </a>
                             <x-animated-submit id="editEmployeeSubmitBtn">

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-['Playfair_Display'] font-bold text-2xl text-white tracking-tight">
+        <h2 class="font-['Playfair_Display'] font-bold text-2xl text-black tracking-tight">
             {{ __('Companies') }}
         </h2>
     </x-slot>
@@ -26,18 +26,18 @@
                 </div>
             @endif
 
-            <div class="bg-slate-900/60 backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden border border-slate-700/50">
+            <div class="bg-white backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden border border-slate-200">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-800/80 backdrop-blur-sm border-b border-slate-700/50">
-                                <th class="px-6 py-4 text-xs font-semibold text-slate-300 uppercase tracking-wider">Logo</th>
-                                <th class="px-6 py-4 text-xs font-semibold text-slate-300 uppercase tracking-wider">Company Details</th>
-                                <th class="px-6 py-4 text-xs font-semibold text-slate-300 uppercase tracking-wider">Contact</th>
-                                <th class="px-6 py-4 text-xs font-semibold text-slate-300 uppercase tracking-wider text-right">
+                            <tr class="bg-slate-50 backdrop-blur-sm border-b border-slate-200">
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-700 uppercase tracking-wider">Logo</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-700 uppercase tracking-wider">Company Details</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-700 uppercase tracking-wider">Contact</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-slate-700 uppercase tracking-wider text-right">
                                     <div class="flex items-center justify-end gap-2">
                                         Actions
-                                        <a href="{{ route('companies.create') }}" class="inline-block hover:scale-110 transition-transform bg-slate-700/50 p-1.5 rounded-lg border border-slate-600/50" title="Add Company">
+                                        <a href="{{ route('companies.create') }}" class="inline-block hover:scale-110 transition-transform bg-slate-200/50 p-1.5 rounded-lg border border-slate-300/50" title="Add Company">
                                             <img src="{{ asset('images/add_company.png') }}" class="w-5 h-5 invert opacity-80 hover:opacity-100" alt="Add Company">
                                         </a>
                                     </div>
@@ -46,21 +46,21 @@
                         </thead>
                         <tbody class="divide-y divide-slate-700/50">
                             @forelse ($companies as $company)
-                                <tr class="hover:bg-slate-800/50 transition-colors duration-150 group">
+                                <tr class="hover:bg-slate-50 transition-colors duration-150 group">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($company->logo)
-                                            <div class="w-12 h-12 rounded-xl border border-slate-700/50 bg-slate-800 overflow-hidden shadow-sm flex items-center justify-center">
+                                            <div class="w-12 h-12 rounded-xl border border-slate-200 bg-slate-50 overflow-hidden shadow-sm flex items-center justify-center">
                                                 <img src="{{ Storage::url($company->logo) }}" alt="{{ $company->name }}" class="w-full h-full object-cover">
                                             </div>
                                         @else
-                                            <div class="w-12 h-12 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-lg shadow-sm border border-slate-700/50">
+                                            <div class="w-12 h-12 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center font-bold text-lg shadow-sm border border-slate-200">
                                                 {{ substr($company->name, 0, 1) }}
                                             </div>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex flex-col">
-                                            <span class="text-sm font-semibold text-slate-100">{{ $company->name }}</span>
+                                            <span class="text-sm font-semibold text-slate-900">{{ $company->name }}</span>
                                             @if($company->website)
                                                 <a href="{{ $company->website }}" target="_blank" class="text-xs text-indigo-500 hover:text-indigo-700 hover:underline mt-0.5 inline-flex items-center">
                                                     {{ str_replace(['http://', 'https://'], '', $company->website) }}
@@ -71,8 +71,8 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($company->email)
-                                            <a href="mailto:{{ $company->email }}" class="text-sm text-slate-300 hover:text-indigo-400 flex items-center gap-1.5 transition-colors">
-                                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                            <a href="mailto:{{ $company->email }}" class="text-sm text-slate-700 hover:text-indigo-600 flex items-center gap-1.5 transition-colors">
+                                                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                                                 {{ $company->email }}
                                             </a>
                                         @else
@@ -81,7 +81,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                            <a href="{{ route('companies.edit', $company) }}" class="p-2 text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-lg transition-colors" title="Edit">
+                                            <a href="{{ route('companies.edit', $company) }}" class="p-2 text-indigo-600 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-lg transition-colors" title="Edit">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                             </a>
                                             <form action="{{ route('companies.destroy', $company) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this company?');">
@@ -98,12 +98,12 @@
                                 <tr>
                                     <td colspan="4" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center justify-center">
-                                            <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                            <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
                                                 <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                                             </div>
-                                            <p class="text-slate-300 font-medium mb-1">No companies found</p>
+                                            <p class="text-slate-700 font-medium mb-1">No companies found</p>
                                             <p class="text-sm text-slate-500 mb-4">Get started by adding a new company.</p>
-                                            <a href="{{ route('companies.create') }}" class="text-indigo-400 hover:text-indigo-300 text-sm font-medium">Add your first company &rarr;</a>
+                                            <a href="{{ route('companies.create') }}" class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">Add your first company &rarr;</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -112,7 +112,7 @@
                     </table>
                 </div>
                 @if($companies->hasPages())
-                    <div class="px-6 py-4 border-t border-slate-700/50 bg-slate-800/30">
+                    <div class="px-6 py-4 border-t border-slate-200 bg-slate-50/30">
                         {{ $companies->links() }}
                     </div>
                 @endif
