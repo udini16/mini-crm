@@ -35,20 +35,49 @@
                         </div>
 
                         <!-- Company -->
-                        <div>
+                        <div x-data="{
+                            open: false,
+                            search: '',
+                            selected: '{{ old('company_id', $employee->company_id) }}',
+                            options: [
+                                @foreach($companies as $company)
+                                    { id: '{{ $company->id }}', name: '{{ addslashes($company->name) }}' },
+                                @endforeach
+                            ],
+                            get filteredOptions() {
+                                if (this.search === '') {
+                                    return this.options;
+                                }
+                                return this.options.filter(i => i.name.toLowerCase().includes(this.search.toLowerCase()));
+                            },
+                            get selectedName() {
+                                let opt = this.options.find(i => i.id == this.selected);
+                                return opt ? opt.name : 'Select a Company...';
+                            }
+                        }" @click.outside="open = false" class="relative">
                             <x-input-label for="company_id" :value="__('Company')" class="text-sm font-semibold text-slate-300" />
                             <div class="relative mt-2">
-                                <select id="company_id" name="company_id" class="block w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5 appearance-none" required>
-                                    <option value="" disabled class="text-slate-500">Select a Company...</option>
-                                    @foreach($companies as $company)
-                                        <option value="{{ $company->id }}" {{ old('company_id', $employee->company_id) == $company->id ? 'selected' : '' }} class="bg-slate-800 text-slate-100">
-                                            {{ $company->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <button type="button" @click="open = !open; if(open) setTimeout(() => $refs.search.focus(), 50)" class="flex items-center justify-between w-full border border-slate-600 bg-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5 px-3 text-left transition-colors">
+                                    <span x-text="selectedName" :class="selected ? 'text-slate-100' : 'text-slate-500'"></span>
+                                    <svg class="h-4 w-4 text-slate-400 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                
+                                <div x-show="open" x-transition.opacity class="absolute z-50 w-full mt-1 bg-slate-800 border border-slate-600 rounded-lg shadow-xl overflow-hidden">
+                                    <div class="p-2 border-b border-slate-700 bg-slate-800">
+                                        <input type="text" x-model="search" x-ref="search" class="w-full bg-slate-900 border-slate-600 text-slate-100 rounded-md text-sm py-1.5 px-3 focus:border-indigo-500 focus:ring-indigo-500" placeholder="Search company...">
+                                    </div>
+                                    <ul class="max-h-48 overflow-y-auto bg-slate-800">
+                                        <template x-for="option in filteredOptions" :key="option.id">
+                                            <li @click="selected = option.id; open = false; search = ''" 
+                                                class="px-3 py-2 cursor-pointer transition-colors text-sm"
+                                                :class="selected == option.id ? 'bg-indigo-600 text-white font-medium' : 'text-slate-300 hover:bg-slate-700'">
+                                                <span x-text="option.name"></span>
+                                            </li>
+                                        </template>
+                                        <li x-show="filteredOptions.length === 0" class="px-3 py-3 text-sm text-slate-500 text-center">No companies found</li>
+                                    </ul>
                                 </div>
+                                <input type="hidden" name="company_id" x-model="selected" id="company_id">
                             </div>
                             <x-input-error :messages="$errors->get('company_id')" class="mt-2 text-sm text-red-400" />
                         </div>
@@ -62,9 +91,37 @@
                             </div>
 
                             <!-- Phone -->
-                            <div>
-                                <x-input-label for="phone" :value="__('Phone Number')" class="text-sm font-semibold text-slate-300" />
-                                <x-text-input id="phone" class="block mt-2 w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="tel" name="phone" :value="old('phone', $employee->phone)" />
+                            <div x-data="{
+                                phoneValue: '{{ old('phone', $employee->phone) }}'
+                            }" x-init="
+                                let iti = window.intlTelInput($refs.phone, {
+                                    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/utils.js',
+                                    initialCountry: 'auto',
+                                    geoIpLookup: function(callback) {
+                                        fetch('https://ipapi.co/json').then(res => res.json()).then(data => callback(data.country_code)).catch(() => callback('us'));
+                                    },
+                                    showSelectedDialCode: true,
+                                    nationalMode: true,
+                                    dropdownContainer: document.body
+                                });
+                                
+                                const updateHiddenPhone = () => {
+                                    phoneValue = iti.getNumber();
+                                };
+
+                                $refs.phone.addEventListener('countrychange', updateHiddenPhone);
+                                $refs.phone.addEventListener('input', updateHiddenPhone);
+                                
+                                // Set initial value if old('phone') exists
+                                if (phoneValue) {
+                                    iti.setNumber(phoneValue);
+                                }
+                            ">
+                                <x-input-label for="phone_display" :value="__('Phone Number')" class="text-sm font-semibold text-slate-300" />
+                                <div class="mt-2">
+                                    <x-text-input id="phone_display" x-ref="phone" class="block w-full border-slate-600 bg-slate-800 text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="tel" />
+                                </div>
+                                <input type="hidden" name="phone" x-model="phoneValue">
                                 <x-input-error :messages="$errors->get('phone')" class="mt-2 text-sm text-red-400" />
                             </div>
                         </div>

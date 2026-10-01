@@ -15,6 +15,10 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        
+        <!-- Intl-Tel-Input for Phone numbers -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css">
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js"></script>
 
         <style>
             .anim-btn-container {
@@ -87,6 +91,47 @@
                 z-index: 12;
             }
 
+            /* Custom intl-tel-input dark theme overrides */
+            .iti { width: 100%; }
+            .iti__country-list { 
+                background-color: #1E293B !important; 
+                border: 1px solid #334155 !important; 
+                color: #F1F5F9 !important; 
+            }
+            
+            /* Custom scrollbar for the dropdown */
+            .iti__country-list::-webkit-scrollbar {
+                width: 8px;
+            }
+            .iti__country-list::-webkit-scrollbar-track {
+                background: #1E293B; 
+            }
+            .iti__country-list::-webkit-scrollbar-thumb {
+                background: #475569; 
+                border-radius: 4px;
+            }
+            .iti__country-list::-webkit-scrollbar-thumb:hover {
+                background: #64748B; 
+            }
+
+            .iti__country.iti__highlight {
+                background-color: #334155 !important; 
+            }
+            .iti__divider {
+                border-bottom: 1px solid #334155 !important;
+            }
+            .iti__dial-code {
+                color: #94A3B8 !important; 
+            }
+            .iti__search-input {
+                background-color: #0F172A !important; 
+                border: 1px solid #334155 !important;
+                color: #F1F5F9 !important;
+                margin-bottom: 5px !important;
+            }
+            .iti__selected-country {
+                background-color: transparent !important;
+            }
 
         <style>
             .bg-samurai {
