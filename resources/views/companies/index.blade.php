@@ -38,7 +38,7 @@
                                     <div class="flex items-center justify-end gap-2">
                                         Actions
                                         <a href="{{ route('companies.create') }}" class="inline-block hover:scale-110 transition-transform bg-slate-200/50 p-1.5 rounded-lg border border-slate-300/50" title="Add Company">
-                                            <img src="{{ asset('images/add_company.png') }}" class="w-5 h-5 invert opacity-80 hover:opacity-100" alt="Add Company">
+                                            <img src="{{ asset('images/add_company.png') }}" class="w-5 h-5 opacity-80 hover:opacity-100" alt="Add Company">
                                         </a>
                                     </div>
                                 </th>

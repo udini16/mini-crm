@@ -38,7 +38,7 @@
                                     <div class="flex items-center justify-end gap-2">
                                         Actions
                                         <a href="{{ route('employees.create') }}" class="inline-block hover:scale-110 transition-transform bg-slate-200/50 p-1.5 rounded-lg border border-slate-300/50" title="Add Employee">
-                                            <img src="{{ asset('images/add_employee.png') }}?v={{ time() }}" class="w-5 h-5 invert opacity-80 hover:opacity-100" alt="Add Employee">
+                                            <img src="{{ asset('images/add_employee.png') }}?v={{ time() }}" class="w-5 h-5 opacity-80 hover:opacity-100" alt="Add Employee">
                                         </a>
                                     </div>
                                 </th>
