@@ -40,7 +40,45 @@
                         </div>
 
                         <!-- Logo -->
-                        <div x-data="{ previewUrl: null }">
+                        <div x-data="{ 
+                            previewUrl: null,
+                            fileError: null,
+                            handleFile(event) {
+                                this.fileError = null;
+                                let file = event.target.files[0];
+                                if (!file) {
+                                    this.previewUrl = null;
+                                    return;
+                                }
+                                
+                                if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+                                    this.fileError = 'File must be a JPG, PNG, or GIF.';
+                                    event.target.value = '';
+                                    this.previewUrl = null;
+                                    return;
+                                }
+                                
+                                if (file.size > 2 * 1024 * 1024) {
+                                    this.fileError = 'File size must be less than 2MB.';
+                                    event.target.value = '';
+                                    this.previewUrl = null;
+                                    return;
+                                }
+
+                                let img = new Image();
+                                let objectUrl = URL.createObjectURL(file);
+                                img.onload = () => {
+                                    if (img.width < 100 || img.height < 100) {
+                                        this.fileError = 'Image dimensions must be at least 100x100 pixels.';
+                                        event.target.value = '';
+                                        this.previewUrl = null;
+                                    } else {
+                                        this.previewUrl = objectUrl;
+                                    }
+                                };
+                                img.src = objectUrl;
+                            }
+                        }">
                             <x-input-label for="logo" :value="__('Company Logo')" class="text-sm font-semibold text-slate-300 mb-2" />
                             
                             @if($company->logo)
@@ -60,7 +98,7 @@
                                 <template x-if="previewUrl">
                                     <div class="absolute inset-0 z-10 w-full h-full flex items-center justify-center bg-slate-900/90 backdrop-blur-sm">
                                         <img :src="previewUrl" class="max-h-full max-w-full object-contain p-2" />
-                                        <button type="button" @click="previewUrl = null; $refs.logo.value = null" class="absolute top-2 right-2 p-1.5 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+                                        <button type="button" @click="previewUrl = null; $refs.logo.value = null; fileError = null" class="absolute top-2 right-2 p-1.5 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-colors shadow-lg opacity-0 group-hover:opacity-100">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                         </button>
                                     </div>
@@ -73,13 +111,19 @@
                                     <div class="flex text-sm text-slate-400 justify-center">
                                         <label for="logo" class="relative cursor-pointer bg-slate-700 rounded-md font-medium text-indigo-400 hover:text-indigo-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-3 py-1 mt-2">
                                             <span>Upload a new file</span>
-                                            <input id="logo" x-ref="logo" @change="if($event.target.files.length) previewUrl = URL.createObjectURL($event.target.files[0])" name="logo" type="file" class="sr-only" accept="image/*">
+                                            <input id="logo" x-ref="logo" @change="handleFile($event)" name="logo" type="file" class="sr-only" accept="image/png, image/jpeg, image/gif">
                                         </label>
                                     </div>
                                     <p class="text-xs text-slate-500 mt-2">PNG, JPG, GIF up to 2MB (min 100x100)</p>
                                 </div>
                             </div>
-                            <x-input-error :messages="$errors->get('logo')" class="mt-2 text-sm text-red-400" />
+                            
+                            <template x-if="fileError">
+                                <p class="mt-2 text-sm text-red-400 font-medium" x-text="fileError"></p>
+                            </template>
+                            <template x-if="!fileError">
+                                <x-input-error :messages="$errors->get('logo')" class="mt-2 text-sm text-red-400" />
+                            </template>
                         </div>
 
                         <div class="pt-6 flex items-center justify-end gap-4 border-t border-slate-700/50 mt-6">
