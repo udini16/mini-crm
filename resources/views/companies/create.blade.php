@@ -44,9 +44,19 @@
                         </div>
 
                         <!-- Logo -->
-                        <div>
+                        <div x-data="{ previewUrl: null }">
                             <x-input-label for="logo" :value="__('Company Logo')" class="text-sm font-semibold text-slate-300 mb-2" />
-                            <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-600 border-dashed rounded-xl hover:border-indigo-400 transition-colors bg-slate-800/50">
+                            <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-600 border-dashed rounded-xl hover:border-indigo-400 transition-colors bg-slate-800/50 relative overflow-hidden group">
+                                
+                                <template x-if="previewUrl">
+                                    <div class="absolute inset-0 z-10 w-full h-full flex items-center justify-center bg-slate-900/90 backdrop-blur-sm">
+                                        <img :src="previewUrl" class="max-h-full max-w-full object-contain p-2" />
+                                        <button type="button" @click="previewUrl = null; $refs.logo.value = null" class="absolute top-2 right-2 p-1.5 bg-red-500/80 hover:bg-red-500 text-white rounded-full transition-colors shadow-lg opacity-0 group-hover:opacity-100">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </button>
+                                    </div>
+                                </template>
+
                                 <div class="space-y-1 text-center">
                                     <svg class="mx-auto h-12 w-12 text-slate-500" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -54,7 +64,7 @@
                                     <div class="flex text-sm text-slate-400 justify-center">
                                         <label for="logo" class="relative cursor-pointer bg-slate-700 rounded-md font-medium text-indigo-400 hover:text-indigo-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 px-3 py-1 mt-2">
                                             <span>Upload a file</span>
-                                            <input id="logo" name="logo" type="file" class="sr-only" accept="image/*">
+                                            <input id="logo" x-ref="logo" @change="if($event.target.files.length) previewUrl = URL.createObjectURL($event.target.files[0])" name="logo" type="file" class="sr-only" accept="image/*">
                                         </label>
                                     </div>
                                     <p class="text-xs text-slate-500 mt-2">PNG, JPG, GIF up to 2MB (min 100x100)</p>
