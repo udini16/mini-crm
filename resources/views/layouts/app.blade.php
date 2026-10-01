@@ -19,65 +19,72 @@
         <style>
             .anim-btn-container {
                 position: relative;
-                height: 80px;
+                height: 48px;
                 width: 200px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             .anim-button {
                 background: #2B2D2F;
-                height: 80px;
+                height: 48px;
                 width: 200px;
                 text-align: center;
                 position: absolute;
                 top: 50%;
-                transform: translateY(-50%);
-                left: 0;
-                right: 0;
-                margin: 0 auto;
+                left: 50%;
+                transform: translate(-50%, -50%);
                 cursor: pointer;
                 border-radius: 8px;
                 z-index: 10;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             .anim-text {
-                font: bold 1.25rem/1 poppins, sans-serif;
+                font: bold 1rem/1 'Playfair Display', serif;
                 color: #71DFBE;
-                position: absolute;
-                top: 50%;
-                transform: translateY(-52%);
-                left: 0;
-                right: 0;
                 pointer-events: none;
+                white-space: nowrap;
             }
 
             .anim-progress-bar {
                 position: absolute;
-                height: 10px;
+                height: 6px;
                 width: 0;
-                right: 0;
                 top: 50%;
                 left: 50%;
                 border-radius: 200px;
-                transform: translateY(-50%) translateX(-50%);
+                transform: translate(-50%, -50%);
                 background: #71DFBE;
                 z-index: 11;
             }
 
             .anim-svg {
-                width: 30px;
+                width: 24px;
                 position: absolute;
                 top: 50%;
-                transform: translateY(-50%) translateX(-50%);
                 left: 50%;
-                right: 0;
+                transform: translate(-50%, -50%);
                 z-index: 12;
             }
 
-            .anim-check {
+            .anim-check, .anim-cross {
                 fill: none;
                 stroke: #1D1F20;
                 stroke-width: 4;
                 stroke-linecap: round;
                 stroke-linejoin: round;
+            }
+            .anim-error-svg {
+                opacity: 0;
+                width: 24px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 12;
             }
 
 
