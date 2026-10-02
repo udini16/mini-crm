@@ -26,6 +26,23 @@
                 </div>
             @endif
 
+            <div class="mb-6 flex justify-end">
+                <form method="GET" action="{{ route('employees.index') }}" class="flex items-center gap-2">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name, email or phone..." class="pl-10 pr-4 py-2 border border-slate-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm w-72 text-slate-700">
+                    </div>
+                    <button type="submit" class="px-4 py-2 bg-slate-800 text-white font-medium rounded-lg text-sm hover:bg-slate-700 transition shadow-sm">Search</button>
+                    @if(request('search'))
+                        <a href="{{ route('employees.index') }}" class="px-4 py-2 bg-slate-100 text-slate-700 font-medium rounded-lg text-sm hover:bg-slate-200 transition border border-slate-200 shadow-sm">Clear</a>
+                    @endif
+                </form>
+            </div>
+
             <div class="bg-white backdrop-blur-md shadow-2xl rounded-2xl overflow-hidden border border-slate-200">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">

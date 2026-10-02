@@ -11,11 +11,21 @@ use Illuminate\View\View;
 
 class EmployeeController extends Controller
 {
-    public function index(): View
+    public function index(\Illuminate\Http\Request $request): View
     {
-        $employees = Employee::with('company')->latest()->paginate(10);
+        $search = $request->get('search');
+        $employees = Employee::with('company')
+            ->when($search, function ($query, $search) {
+                return $query->where('first_name', 'like', "%{$search}%")
+                             ->orWhere('last_name', 'like', "%{$search}%")
+                             ->orWhere('email', 'like', "%{$search}%")
+                             ->orWhere('phone', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('employees.index', compact('employees'));
+        return view('employees.index', compact('employees', 'search'));
     }
 
     public function create(): View

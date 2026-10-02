@@ -11,11 +11,15 @@ use Illuminate\View\View;
 
 class CompanyController extends Controller
 {
-    public function index(): View
+    public function index(\Illuminate\Http\Request $request): View
     {
-        $companies = Company::latest()->paginate(10);
+        $search = $request->get('search');
+        $companies = Company::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%");
+        })->latest()->paginate(10)->withQueryString();
 
-        return view('companies.index', compact('companies'));
+        return view('companies.index', compact('companies', 'search'));
     }
 
     public function create(): View
