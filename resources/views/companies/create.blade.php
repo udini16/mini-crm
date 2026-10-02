@@ -19,7 +19,7 @@
 
                         <!-- Name -->
                         <div>
-                            <x-input-label for="name" :value="__('Company Name')" class="text-sm font-semibold text-slate-700" />
+                            <x-input-label for="name" class="text-sm font-semibold text-slate-700">Company Name <span class="text-red-500">*</span></x-input-label>
                             <x-text-input id="name" class="block mt-2 w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="name" :value="old('name')" required autofocus placeholder="e.g. Acme Corporation" />
                             <x-input-error :messages="$errors->get('name')" class="mt-2 text-sm text-red-400" />
                         </div>

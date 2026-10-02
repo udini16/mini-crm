@@ -20,14 +20,14 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <!-- First Name -->
                             <div>
-                                <x-input-label for="first_name" :value="__('First Name')" class="text-sm font-semibold text-slate-700" />
+                                <x-input-label for="first_name" class="text-sm font-semibold text-slate-700">First Name <span class="text-red-500">*</span></x-input-label>
                                 <x-text-input id="first_name" class="block mt-2 w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="first_name" :value="old('first_name')" required autofocus placeholder="e.g. John" />
                                 <x-input-error :messages="$errors->get('first_name')" class="mt-2 text-sm text-red-400" />
                             </div>
 
                             <!-- Last Name -->
                             <div>
-                                <x-input-label for="last_name" :value="__('Last Name')" class="text-sm font-semibold text-slate-700" />
+                                <x-input-label for="last_name" class="text-sm font-semibold text-slate-700">Last Name <span class="text-red-500">*</span></x-input-label>
                                 <x-text-input id="last_name" class="block mt-2 w-full border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5" type="text" name="last_name" :value="old('last_name')" required placeholder="e.g. Doe" />
                                 <x-input-error :messages="$errors->get('last_name')" class="mt-2 text-sm text-red-400" />
                             </div>
@@ -54,7 +54,7 @@
                                 return opt ? opt.name : 'Select a Company...';
                             }
                         }" @click.outside="open = false" class="relative">
-                            <x-input-label for="company_id" :value="__('Company')" class="text-sm font-semibold text-slate-700" />
+                            <x-input-label for="company_id" class="text-sm font-semibold text-slate-700">Company <span class="text-red-500">*</span></x-input-label>
                             <div class="relative mt-2">
                                 <button type="button" @click="open = !open; if(open) setTimeout(() => $refs.search.focus(), 50)" class="flex items-center justify-between w-full border border-slate-300 bg-slate-50 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-lg shadow-sm text-sm py-2.5 px-3 text-left transition-colors">
                                     <span x-text="selectedName" :class="selected ? 'text-slate-900' : 'text-slate-500'"></span>
