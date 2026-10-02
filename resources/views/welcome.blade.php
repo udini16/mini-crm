@@ -121,7 +121,7 @@
                         </p>
                     </blockquote>
 
-                    <div class="flex flex-col sm:flex-row gap-4 justify-start items-center">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     @if (Route::has('login'))
                         @auth
                             <a href="{{ url('/dashboard') }}" class="button-54">Go to Dashboard</a>
