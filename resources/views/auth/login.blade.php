@@ -2,23 +2,34 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" id="loginForm">
         @csrf
 
         <!-- Email Address -->
         <div class="font-sans">
-            <x-input-label for="email" :value="__('Email')" class="text-slate-800 font-bold mb-1" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <div class="flex items-center justify-between mb-1">
+                <x-input-label for="email" :value="__('Email')" class="text-slate-800 font-bold" />
+                <span class="text-[11px] text-slate-500">
+                    Demo: <button type="button" onclick="document.getElementById('email').value='admin@admin.com'" class="font-mono text-indigo-600 font-semibold hover:underline cursor-pointer" title="Click to fill">admin@admin.com</button>
+                </span>
+            </div>
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" placeholder="admin@admin.com" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4 font-sans">
-            <x-input-label for="password" :value="__('Password')" class="text-slate-800 font-bold mb-1" />
+            <div class="flex items-center justify-between mb-1">
+                <x-input-label for="password" :value="__('Password')" class="text-slate-800 font-bold" />
+                <span class="text-[11px] text-slate-500">
+                    Demo: <button type="button" onclick="document.getElementById('password').value='password'" class="font-mono text-indigo-600 font-semibold hover:underline cursor-pointer" title="Click to fill">password</button>
+                </span>
+            </div>
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
+                            placeholder="••••••••"
                             required autocomplete="current-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
